@@ -19,67 +19,18 @@ module.exports = React.createClass({
     loadData: function() {
         $.ajax(API_URL + "/" + this.props.params.id) .done(function(comments) {
             this.setState(comments[0]);
+            //setting the state to the comments[0]
+            //to access a certain JSON objects of comments[0] simply follow with . and then name of what you are accessing
+            //for example, comments[0].id or comments[0].authors
         }.bind(this));
     },
-    handleAuthorChange: function(e) {
-        this.setState({author: e.target.value});
-    },
-    handleTextChange: function(e) {
-        this.setState({text: e.target.value});
-    },
-    contextTypes: {
-        router: React.PropTypes.object
-    },
-    handleUpdate: function() {
-        var updatedComment = {
-            author: this.state.author.trim(),
-            text: this.state.text.trim()
-        }
-        $.ajax({
-            url: API_URL + "/" + this.props.params.id,
-            dataType: 'json',
-            type: 'PUT',
-            contentType:'application/json',
-            data: JSON.stringify(updatedComment)
-        })
-         .done(function(comments){
-             this.context.router.push('/');
-         }.bind(this))
-         .fail(function(xhr, status, errorThrown) {
-             console.error(API_URL, status, errorThrown.toString());
-         }.bind(this));
-    },
-    handleDelete: function() {
-        $.ajax({
-            url: API_URL + "/" + this.props.params.id,
-            type: 'DELETE',
-        })
-         .done(function(comments){
-             this.context.router.push('/');
-         }.bind(this))
-         .fail(function(xhr, status, errorThrown) {
-             console.error(API_URL, status, errorThrown.toString());
-         }.bind(this));
-    },
+   
     render: function() {
         return (
             <div>
-                <form className="commentForm">
-                    <h1>Comment Edit - {this.state.id}</h1>
-                    <input
-                        type="text"
-                        value={this.state.author}
-                        onChange={this.handleAuthorChange}
-                    />
-                    <input
-                        type="text"
-                        value={this.state.text}
-                        onChange={this.handleTextChange}
-                    />
-                    <button type="button" onClick={this.handleUpdate}>Update</button>
-                    <button type="button" onClick={this.handleDelete}>Delete</button>
-                </form>
-                <Link to='/'>Cancel</Link>
+                    <h1>Event details: {this.state.id} <br/>
+                     {this.state.text} <br/> {this.state.author}</h1>
+                    
             </div>
         );
     }

@@ -5,6 +5,7 @@ import Remarkable from 'remarkable';
 import Comment from './comment';
 
 module.exports = React.createClass({
+    /* loop through the list and and add each element to comment Nodes */
     render: function() {
         var commentNodes = this.props.data.map(function(comment) {
             return (
